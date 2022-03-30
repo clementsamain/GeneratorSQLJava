@@ -16,6 +16,7 @@ public class Examples {
         //EXAMPLE_INSERT();
         //EXAMPLE_GET();
         //EXAMPLE_MODIFY();
+        EXAMPLE_CREATE_TABLE();
     }
 
     /**
@@ -44,7 +45,7 @@ public class Examples {
         DataBaseConnexion db = new DataBaseConnexion(info[0], info[1], info[2]);
         // creation of the table
         List<ColumnTable> list = new ArrayList<>();
-        list.add(new ColumnTable<String>("faceValue", TypeSQL.NUMBER) {
+        list.add(new ColumnTable<String>("faceValue", TypeSQL.DOUBLE) {
             @Override
             public boolean verify(String value) {
                 try{
@@ -56,31 +57,31 @@ public class Examples {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("faceValueCurrency", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("faceValueCurrency", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("EUR") || value.equals("USD") || value.equals("GBP");
             }
         });
-        list.add(new ColumnTable<String>("typeOfBooking", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("typeOfBooking", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("Nominal") || value.equals("By Piece");
             }
         });
-        list.add(new ColumnTable<String>("countryOfIssue", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("countryOfIssue", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("France") || value.equals("Espagne") || value.equals("Angleterre");
             }
         });
-        list.add(new ColumnTable<String>("legalTypeOfSecurity", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("legalTypeOfSecurity", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("Equity") || value.equals("stock") || value.equals("Bound");
             }
         });
-        list.add(new ColumnTable<String>("status", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("status", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("Current") || value.equals("Inactive") || value.equals("Matured");
@@ -112,13 +113,13 @@ public class Examples {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("codeNature", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("codeNature", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("securityID", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("securityID", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 try{
@@ -130,7 +131,7 @@ public class Examples {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("synonym", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("synonym", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 try{
@@ -187,7 +188,7 @@ public class Examples {
         DataBaseConnexion db = new DataBaseConnexion(info[0], info[1], info[2]);
         // creation of the table
         List<ColumnTable> list = new ArrayList<>();
-        list.add(new ColumnTable<String>("faceValue", TypeSQL.NUMBER) {
+        list.add(new ColumnTable<String>("faceValue", TypeSQL.DOUBLE) {
             @Override
             public boolean verify(String value) {
                 try{
@@ -199,31 +200,31 @@ public class Examples {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("faceValueCurrency", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("faceValueCurrency", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("EUR") || value.equals("USD") || value.equals("GBP");
             }
         });
-        list.add(new ColumnTable<String>("typeOfBooking", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("typeOfBooking", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("Nominal") || value.equals("By Piece");
             }
         });
-        list.add(new ColumnTable<String>("countryOfIssue", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("countryOfIssue", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("France") || value.equals("Espagne") || value.equals("Angleterre");
             }
         });
-        list.add(new ColumnTable<String>("legalTypeOfSecurity", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("legalTypeOfSecurity", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("Equity") || value.equals("stock") || value.equals("Bound");
             }
         });
-        list.add(new ColumnTable<String>("status", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("status", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("Current") || value.equals("Inactive") || value.equals("Matured");
@@ -255,13 +256,13 @@ public class Examples {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("codeNature", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("codeNature", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("securityID", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("securityID", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 try{
@@ -273,7 +274,7 @@ public class Examples {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("synonym", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("synonym", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 try{
@@ -320,7 +321,7 @@ public class Examples {
         DataBaseConnexion db = new DataBaseConnexion(info[0], info[1], info[2]);
         // creation of the table
         List<ColumnTable> list = new ArrayList<>();
-        list.add(new ColumnTable<String>("faceValue", TypeSQL.NUMBER) {
+        list.add(new ColumnTable<String>("faceValue", TypeSQL.DOUBLE) {
             @Override
             public boolean verify(String value) {
                 try{
@@ -332,31 +333,31 @@ public class Examples {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("faceValueCurrency", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("faceValueCurrency", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("EUR") || value.equals("USD") || value.equals("GBP");
             }
         });
-        list.add(new ColumnTable<String>("typeOfBooking", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("typeOfBooking", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("Nominal") || value.equals("By Piece");
             }
         });
-        list.add(new ColumnTable<String>("countryOfIssue", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("countryOfIssue", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("France") || value.equals("Espagne") || value.equals("Angleterre");
             }
         });
-        list.add(new ColumnTable<String>("legalTypeOfSecurity", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("legalTypeOfSecurity", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("Equity") || value.equals("stock") || value.equals("Bound");
             }
         });
-        list.add(new ColumnTable<String>("status", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("status", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return value.equals("Current") || value.equals("Inactive") || value.equals("Matured");
@@ -388,13 +389,13 @@ public class Examples {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("codeNature", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("codeNature", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("securityID", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("securityID", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 try{
@@ -406,7 +407,7 @@ public class Examples {
                 return true;
             }
         });
-        list.add(new ColumnTable<String>("synonym", TypeSQL.STRING) {
+        list.add(new ColumnTable<String>("synonym", TypeSQL.TEXT) {
             @Override
             public boolean verify(String value) {
                 try{
@@ -448,5 +449,139 @@ public class Examples {
 
         // check if the request is ok
         System.out.println("element(s) modified : " + nbr);
+    }
+
+    private static void EXAMPLE_CREATE_TABLE()
+    {
+        // creation of the connexion
+        String[] info = openDB();
+        DataBaseConnexion db = new DataBaseConnexion(info[0], info[1], info[2]);
+        // creation of the table
+        List<ColumnTable> list = new ArrayList<>();
+        list.add(new ColumnTable<String>("faceValue", TypeSQL.DOUBLE) {
+            @Override
+            public boolean verify(String value) {
+                try{
+                    Double.parseDouble(value);
+                }
+                catch (NumberFormatException e){
+                    return false;
+                }
+                return true;
+            }
+        });
+        list.add(new ColumnTable<String>("faceValueCurrency", TypeSQL.TEXT) {
+            @Override
+            public boolean verify(String value) {
+                return value.equals("EUR") || value.equals("USD") || value.equals("GBP");
+            }
+        });
+        list.add(new ColumnTable<String>("typeOfBooking", TypeSQL.TEXT) {
+            @Override
+            public boolean verify(String value) {
+                return value.equals("Nominal") || value.equals("By Piece");
+            }
+        });
+        list.add(new ColumnTable<String>("countryOfIssue", TypeSQL.TEXT) {
+            @Override
+            public boolean verify(String value) {
+                return value.equals("France") || value.equals("Espagne") || value.equals("Angleterre");
+            }
+        });
+        list.add(new ColumnTable<String>("legalTypeOfSecurity", TypeSQL.TEXT) {
+            @Override
+            public boolean verify(String value) {
+                return value.equals("Equity") || value.equals("stock") || value.equals("Bound");
+            }
+        });
+        list.add(new ColumnTable<String>("status", TypeSQL.TEXT) {
+            @Override
+            public boolean verify(String value) {
+                return value.equals("Current") || value.equals("Inactive") || value.equals("Matured");
+            }
+        });
+        list.add(new ColumnTable<String>("cdcDepositDate", TypeSQL.DATE) {
+            @Override
+            public boolean verify(String value) {
+                try{
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    format.parse ( value );
+                }
+                catch (Exception e){
+                    return false;
+                }
+                return true;
+            }
+        });
+        list.add(new ColumnTable<String>("revisionDate", TypeSQL.DATE) {
+            @Override
+            public boolean verify(String value) {
+                try{
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    format.parse ( value );
+                }
+                catch (Exception e){
+                    return false;
+                }
+                return true;
+            }
+        });
+        list.add(new ColumnTable<String>("codeNature", TypeSQL.TEXT) {
+            @Override
+            public boolean verify(String value) {
+                return true;
+            }
+        });
+        list.add(new ColumnTable<String>("securityID", TypeSQL.VARCHAR) {
+            @Override
+            public boolean verify(String value) {
+                try{
+                    UUID.fromString(value);
+                }
+                catch (Exception e){
+                    return false;
+                }
+                return true;
+            }
+        });
+        list.add(new ColumnTable<String>("synonym", TypeSQL.TEXT) {
+            @Override
+            public boolean verify(String value) {
+                try{
+                    if(value.indexOf("[") != 0)
+                    {
+                        return false;
+                    }
+                    if(value.lastIndexOf("]") != value.length()-1)
+                    {
+                        return false;
+                    }
+                    value = value.substring(1, value.length()-1);
+                    String[] listOfElement = value.split(";");
+                    for(String element : listOfElement){
+                        String[] typeAndValue = element.split(":");
+                        if(typeAndValue.length < 2){
+                            return false;
+                        }
+                    }
+                }
+                catch (Exception e){
+                    return false;
+                }
+                return true;
+            }
+        });
+        DataBaseTable table = new DataBaseTable(list, "Security");
+
+        //create key for table
+        ArrayList<KeyColumn> listKey = new ArrayList<>();
+        listKey.add(new KeyColumn(KeySQL.PRIMARY, 36,"securityID"));
+        listKey.add(new KeyColumn(KeySQL.UNIQUE, null, "synonym"));
+
+        //generate and execute the query
+        boolean ifOk = DataBaseGenerator.createTableInDataBase(db, table, listKey);
+
+        //check if the table has been created
+        System.out.println("Table Security created : " + ifOk);
     }
 }

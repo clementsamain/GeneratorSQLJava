@@ -1,11 +1,8 @@
 package SQLTool;
 
 public enum TypeSQL {
-    STRING,
+    TEXT,
+    VARCHAR,
     DATE,
-    TIME,
-    DATETIME,
-    NUMBER,
-    BOOLEAN,
-    NULL
+    DOUBLE
 }

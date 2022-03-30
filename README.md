@@ -7,19 +7,25 @@ If you have any suggestion, bugs or problems, please, contact me.
 # Installation
 TODO
 # Usage
-TODO
+- How to create a database structure? Go to the Examples section.
+- How to add data to a table ? Go to the Examples section.
+- How to get data from a table ? Go to the Examples section.
+- How to create a new table ? Go to the Examples section.
+- How to verify if a table exists ?
+  ```java
+  DataBaseGenerator.verifyIfTableExist(DatabaseConnexion db, String tableName)
+  ```
 # Todo list
 Already implemented
 - [X] Create a database structure based on the Java classes
 - [X] Generate the SQL queries for get data from the database
 - [X] Generate the SQL queries for insert data into the database
 - [X] Generate the SQL queries for modify data in the database
-
+- [X] Generate the SQL queries for create a table that give by the class model
+- [X] Specify primary keys and unique keys
 
 Not implemented yet
 - [ ] Generate the SQL queries for delete data from the database
-- [ ] Generate the SQL queries for create a table that give by the class model
-- [ ] Specify primary keys and unique keys
 - [ ] Generate reports with structure of the database
 - [ ] Generate more complex queries (like 'where date is between two dates', >, <, >=, <=, =, !=, etc.)
 - [ ] Add more type of data (like 'geometry', 'point', 'polygon', etc.)
@@ -45,7 +51,7 @@ In all examples bellow, the database is composed of one table named "Security" w
 - revisionDate: date
 - codeNature: string
 
-if you want to test the package, you can use this SQL script to create the example database:
+if you want to test the package, you can go to create table section or use this SQL script to create the example database:
 ```sql 
 CREATE TABLE `Security` (
     `faceValue` double NOT NULL,
@@ -57,8 +63,10 @@ CREATE TABLE `Security` (
     `cdcDepositDate` text NOT NULL,
     `revisionDate` text NOT NULL,
     `codeNature` text NOT NULL,
-    `securityID` text NOT NULL,
-    `synonym` text NOT NULL
+    `securityID` varchar(36) NOT NULL,
+    `synonym` text NOT NULL,
+    PRIMARY KEY (`securityID`),
+    UNIQUE KEY (`synonym`)
 );
 ```
 ```sql 
@@ -257,7 +265,7 @@ In this case, we want to get all the data of the table when the country of issue
     listOfColumnValue.add(new ColumnValue("countryOfIssue", "France"));
     ```
   Now we have to specify the columns and the value of the columns for the modification.\
-- ```java
+  ```java
   List<ColumnValue> listOfColumnValue2 = new ArrayList<>();
   listOfColumnValue2.add(new ColumnValue("countryOfIssue", "Espagne"));
     ```
@@ -268,4 +276,16 @@ In this case, we want to get all the data of the table when the country of issue
     int nbr = DataBaseGenerator.modifyElement(db, table, listOfColumnValue, listOfColumnValue2);
   System.out.println("element(s) modified : " + nbr);
     ```
-  
+- create a new table
+Before building and execute a query, you have to specify a list of *KeyColumn* to specify keys like primary key, foreign key, unique key, etc (empty if you don't want to specify keys).\
+The class KeyColumn take 3 parameters : the type of the key (for example, primary key), the length of the key (for example, length of primary key), and the name of the column.
+```java
+List<KeyColumn> listOfKeyColumn = new ArrayList<>();
+listKey.add(new KeyColumn(KeySQL.PRIMARY, 36,"securityID"));
+listKey.add(new KeyColumn(KeySQL.UNIQUE, null, "synonym"));
+```
+After that you are able to build and execute the query.
+```java
+boolean ifOk = DataBaseGenerator.createTableInDataBase(db, table, listKey);
+System.out.println("Table Security created : " + ifOk);
+```

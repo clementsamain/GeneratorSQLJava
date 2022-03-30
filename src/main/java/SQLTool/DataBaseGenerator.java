@@ -121,13 +121,35 @@ public class DataBaseGenerator {
      * @param table the table to create in the database
      * @return boolean if the request is done correctly or not
      */
-    public static boolean createTableInDataBase(DataBaseConnexion db, DataBaseTable table) {
+    public static boolean createTableInDataBase(DataBaseConnexion db, DataBaseTable table, List<KeyColumn> keyColumnList) {
         String request = "CREATE TABLE " + table.getTableName() + " (";
         for (ColumnTable columnTable : table.getColumnList().values()) {
-            request += columnTable.getColumnName() + " " + columnTable.getTypeSQL().name() + ", ";
+            // verify if the column is in the key
+            KeyColumn key = null;
+            for (KeyColumn keyColumn : keyColumnList) {
+                if (keyColumn.getColumnName().equals(columnTable.getColumnName())) {
+                    key = keyColumn;
+                }
+            }
+            if (key != null && key.getLengthOfValue() != null) {
+                request += "`" + columnTable.getColumnName() + "` " + columnTable.getTypeSQL().name() + "(" + key.getLengthOfValue() + "), ";
+            }
+            else {
+                request += "`" + columnTable.getColumnName() + "` " + columnTable.getTypeSQL().name() + ", ";
+            }
+        }
+        // add key column
+        for (KeyColumn keyColumn : keyColumnList) {
+            //verify if the column is in the table
+            if (table.getColumnList().containsKey(keyColumn.getColumnName())) {
+                request += keyColumn.getKeySQL().name() + " KEY (`" + keyColumn.getColumnName() + "`), ";
+            } else {
+                throw new IllegalArgumentException("The column " + keyColumn.getColumnName() + " is not in the table " + table.getTableName());
+            }
         }
         request = request.substring(0, request.length() - 2) + ");";
-        return db.sendModifyRequest(request) == 1;
+        db.sendModifyRequest(request);
+        return verifyIfTableExist(db, table.getTableName());
     }
 
     /**
@@ -137,7 +159,7 @@ public class DataBaseGenerator {
      * @return the good format of the value to insert in the database
      */
     private static String getGoodFormat(TypeSQL type, String value) {
-        if(type == TypeSQL.STRING) {
+        if(type == TypeSQL.TEXT) {
             return "'" + value + "'";
         }
         return value;
@@ -164,5 +186,19 @@ public class DataBaseGenerator {
             e.printStackTrace();
         }
         return result;
+    }
+
+    //function that verify if the table exist in the database use INFORMATION_SCHEMA.TABLES
+    public static boolean verifyIfTableExist(DataBaseConnexion db, String tableName) {
+        String request = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + tableName + "';";
+        ResultSet resultSet = db.sendRequest(request);
+        try {
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
