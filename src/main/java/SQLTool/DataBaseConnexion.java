@@ -1,4 +1,4 @@
-package Tool;
+package SQLTool;
 
 import java.sql.*;
 
@@ -35,11 +35,12 @@ public class DataBaseConnexion
         {
             System.out.println("Impossible to find com.mysql.cj.jdbc.Driver\n");
             e.printStackTrace();
+            System.exit(1);
         }
         catch (SQLException e)
         {
             System.out.println("ERROR WITH DB CONNEXION");
-            System.exit(0);
+            System.exit(1);
         }
     }
 
@@ -75,7 +76,7 @@ public class DataBaseConnexion
         }
         catch (SQLException e)
         {
-            System.out.println("Impossible to connect with sql\n");
+            System.out.println("something went wrong with the request or the connection\n");
             e.printStackTrace();
             return null;
         }
@@ -86,20 +87,16 @@ public class DataBaseConnexion
      * @param requestSQL the request to execute
      * @return true if the request is executed, false otherwise
      */
-    public boolean sendModifyRequest(String requestSQL)
+    public int sendModifyRequest(String requestSQL)
     {
         try {
-            int rs = stmt.executeUpdate(requestSQL);
-            if(rs == 1)
-                return true;
-            else
-                return false;
+            return stmt.executeUpdate(requestSQL);
         }
         catch (SQLException e)
         {
-            System.out.println("Impossible to connect with sql\n");
+            System.out.println("something went wrong with the request or the connection\n");
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 

@@ -1,4 +1,4 @@
-package Tool;
+package SQLTool;
 
 /**
  * class that represents a value in a column in a table of a database

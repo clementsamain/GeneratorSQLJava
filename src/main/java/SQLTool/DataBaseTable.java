@@ -1,7 +1,6 @@
-package Tool;
+package SQLTool;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -17,6 +16,7 @@ public class DataBaseTable {
      * @param tableName the name of the table
      */
     public DataBaseTable(List<ColumnTable> columnList, String tableName) {
+        this.columnList = new HashMap<>();
         for(ColumnTable column : columnList) {
             this.columnList.put(column.getColumnName(), column);
         }
