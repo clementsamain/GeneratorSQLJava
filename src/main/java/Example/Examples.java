@@ -24,7 +24,7 @@ public class Examples {
      */
     private static String[] openDB() {
         try {
-            FileReader fr = new FileReader(System.getProperty("user.dir") + "/DB.txt");
+            FileReader fr = new FileReader(System.getProperty("user.dir") + "/DB.option");
             BufferedReader br = new BufferedReader(fr);
             String URL = br.readLine().substring("URL :".length()).replace(" ", "");
             String USER = br.readLine().substring("USER :".length()).replace(" ", "");
