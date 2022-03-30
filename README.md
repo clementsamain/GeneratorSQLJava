@@ -13,11 +13,12 @@ Already implemented
 - [X] Create a database structure based on the Java classes
 - [X] Generate the SQL queries for get data from the database
 - [X] Generate the SQL queries for insert data into the database
+- [X] Generate the SQL queries for modify data in the database
 
 
 Not implemented yet
-- [ ] Generate the SQL queries for update data into the database
 - [ ] Generate the SQL queries for delete data from the database
+- [ ] Generate the SQL queries for create a table that give by the class model
 - [ ] Specify primary keys and unique keys
 - [ ] Generate reports with structure of the database
 - [ ] Generate more complex queries (like 'where date is between two dates', >, <, >=, <=, =, !=, etc.)
