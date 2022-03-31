@@ -48,19 +48,10 @@ public class DataBaseConnexion
      * method that establish connection with the database
      * @return true if the connection is established, false otherwise
      */
-    private boolean connexionToDB(String url, String user, String password)
-    {
-        try {
-            Connection con = DriverManager.getConnection(url, user, password);
-            stmt=con.createStatement();
-            return true;
-        }
-        catch (SQLException e)
-        {
-            System.out.println("Impossible to connect with sql\n");
-            e.printStackTrace();
-            return false;
-        }
+    private boolean connexionToDB(String url, String user, String password) throws SQLException {
+        Connection con = DriverManager.getConnection(url, user, password);
+        stmt=con.createStatement();
+        return true;
     }
 
     /**
@@ -68,18 +59,9 @@ public class DataBaseConnexion
      * @param requestSQL the request to execute
      * @return the result of the request
      */
-    public ResultSet sendRequest(String requestSQL)
-    {
-        try {
-            ResultSet rs = stmt.executeQuery(requestSQL);
-            return rs;
-        }
-        catch (SQLException e)
-        {
-            System.out.println("something went wrong with the request or the connection\n");
-            e.printStackTrace();
-            return null;
-        }
+    public ResultSet sendRequest(String requestSQL) throws SQLException {
+        ResultSet rs = stmt.executeQuery(requestSQL);
+        return rs;
     }
 
     /**
@@ -87,17 +69,8 @@ public class DataBaseConnexion
      * @param requestSQL the request to execute
      * @return true if the request is executed, false otherwise
      */
-    public int sendModifyRequest(String requestSQL)
-    {
-        try {
-            return stmt.executeUpdate(requestSQL);
-        }
-        catch (SQLException e)
-        {
-            System.out.println("something went wrong with the request or the connection\n");
-            e.printStackTrace();
-            return 0;
-        }
+    public int sendModifyRequest(String requestSQL) throws SQLException {
+        return stmt.executeUpdate(requestSQL);
     }
 
 }

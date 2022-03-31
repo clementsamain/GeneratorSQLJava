@@ -24,4 +24,8 @@ public class ColumnValue {
     public String getColumnName() {
         return columnName;
     }
+
+    public void setColumnValue(String columnValue) {
+        this.columnValue = columnValue;
+    }
 }

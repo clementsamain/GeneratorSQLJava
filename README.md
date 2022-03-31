@@ -10,6 +10,7 @@ TODO
 - How to create a database structure? Go to the Examples section.
 - How to add data to a table ? Go to the Examples section.
 - How to get data from a table ? Go to the Examples section.
+- How to delete data from a table ? Go to the Examples section.
 - How to create a new table ? Go to the Examples section.
 - How to verify if a table exists ?
   ```java
@@ -23,9 +24,9 @@ Already implemented
 - [X] Generate the SQL queries for modify data in the database
 - [X] Generate the SQL queries for create a table that give by the class model
 - [X] Specify primary keys and unique keys
+- [X] Generate the SQL queries for delete data from the database
 
 Not implemented yet
-- [ ] Generate the SQL queries for delete data from the database
 - [ ] Generate reports with structure of the database
 - [ ] Generate more complex queries (like 'where date is between two dates', >, <, >=, <=, =, !=, etc.)
 - [ ] Add more type of data (like 'geometry', 'point', 'polygon', etc.)
@@ -82,6 +83,14 @@ If you have "SSLHandShakeException No Appropriate Protocol" error during the con
 ```java
 DataBaseConnexion db = new DataBaseConnexion("jdbc:mysql://localhost:3306/test" + "?enabledTLSProtocols=TLSv1.2", "user", "password");
 ```
+If you have "java.sql.SQLException: The server timezone value 'UTC' is unrecognized or represents
+more than one timezone. You must configure either the server or JDBC driver (via
+the serverTimezone configuration property) to use a more specifc timezone value if
+you want to utilize timezone support." error, you can try to use the following command:
+```java
+DataBaseConnexion db = new DataBaseConnexion("jdbc:mysql://localhost:3306/test" + "?enabledTLSProtocols=TLSv1.2" + "&" + "serverTimezone=UTC", "user", "password");
+```
+
 Creating the database structure
 
 - First, we need to create tables
@@ -275,6 +284,20 @@ In this case, we want to get all the data of the table when the country of issue
     ```java
     int nbr = DataBaseGenerator.modifyElement(db, table, listOfColumnValue, listOfColumnValue2);
   System.out.println("element(s) modified : " + nbr);
+    ```
+- delete data in the table\
+Before building and execute a query, you have to create a list of ColumnValue to specify the row that will be deleted.\
+For example, we want to delete all the data of the table that have *France* as *countryOfIssue* column.\
+    ```java
+    List<ColumnValue> listOfColumnValue = new ArrayList<>();
+    listOfColumnValue.add(new ColumnValue("countryOfIssue", "France"));
+    ```
+  Now we have to build and execute the query.\
+  The class DataBaseGenerator have functions to build and execute queries.\
+  The function dropElement() take the *DataBaseConnexion* db, the *DataBaseTable* table and the list of *ColumnValue* and return the number of rows deleted.
+    ```java
+    int nbr = DataBaseGenerator.dropElement(db, table, listOfColumnValue);
+    System.out.println("element(s) deleted : " + nbr);
     ```
 - create a new table
 Before building and execute a query, you have to specify a list of *KeyColumn* to specify keys like primary key, foreign key, unique key, etc (empty if you don't want to specify keys).\

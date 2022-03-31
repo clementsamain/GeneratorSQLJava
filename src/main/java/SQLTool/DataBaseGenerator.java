@@ -17,7 +17,7 @@ public class DataBaseGenerator {
      * @param columnValues the list of the column and the value that used to get the element in the database
      * @return the result of the request
      */
-    public static ResultSet getElement(DataBaseConnexion connexion, DataBaseTable table, List<ColumnValue> columnValues) {
+    public static ResultSet getElement(DataBaseConnexion connexion, DataBaseTable table, List<ColumnValue> columnValues) throws SQLException {
         String request = "SELECT * FROM " + table.getTableName() + " WHERE ";
         for (ColumnValue columnValue : columnValues) {
             if (table.getColumnList().containsKey(columnValue.getColumnName())) // if the column is in the table
@@ -44,7 +44,7 @@ public class DataBaseGenerator {
      * @param columnValues the list of the column and the value to insert
      * @return true if the request is done correctly, false if not
      */
-    public static boolean insertElement(DataBaseConnexion connexion, DataBaseTable table, List<ColumnValue> columnValues) {
+    public static boolean insertElement(DataBaseConnexion connexion, DataBaseTable table, List<ColumnValue> columnValues) throws SQLException {
         String requestPart1 = "INSERT INTO " + table.getTableName() + " (";
         String requestPart2 = " VALUES (";
         HashMap<String, ColumnTable> map = table.getColumnList();
@@ -89,7 +89,7 @@ public class DataBaseGenerator {
      * @param newColumnValueList the list of the value that represent a row in the table to modify
      * @return int the number of row modified
      */
-    public static int modifyElement(DataBaseConnexion db, DataBaseTable table, List<ColumnValue> columnValueList, List<ColumnValue> newColumnValueList) {
+    public static int modifyElement(DataBaseConnexion db, DataBaseTable table, List<ColumnValue> columnValueList, List<ColumnValue> newColumnValueList) throws SQLException {
         String request = "UPDATE " + table.getTableName() + " SET ";
         HashMap<String, Boolean> verify = new HashMap<>();
         for (ColumnValue columnValue : columnValueList) {
@@ -116,12 +116,33 @@ public class DataBaseGenerator {
         return db.sendModifyRequest(request);
     }
 
+    //function that drop a row in the table with a list of columnValue and verify if the column is in the table and if the value is valid
+    /**
+     * function that drop a row in the table with a list of columnValue and verify if the column is in the table and if the value is valid
+     * @param db the database connexion where the table is
+     * @param table the table where the value is
+     * @param columnValueList the list of the value that represent a row in the table
+     * @return int the number of row modified
+     */
+    public static int dropElement(DataBaseConnexion db, DataBaseTable table, List<ColumnValue> columnValueList) throws SQLException {
+        String request = "DELETE FROM " + table.getTableName() + " WHERE ";
+        for (ColumnValue columnValue : columnValueList) {
+            if (table.getColumnList().containsKey(columnValue.getColumnName())) {
+                request += columnValue.getColumnName() + " = " + getGoodFormat(table.getColumnList().get(columnValue.getColumnName()).getTypeSQL(), columnValue.getColumnValue()) + " AND ";
+            } else {
+                throw new IllegalArgumentException("The column " + columnValue.getColumnName() + " is not in the table " + table.getTableName());
+            }
+        }
+        request = request.substring(0, request.length() - 5) + ";";
+        return db.sendModifyRequest(request);
+    }
+
     /**
      * function that generate the SQL request to create table and insert the table in the database
      * @param table the table to create in the database
      * @return boolean if the request is done correctly or not
      */
-    public static boolean createTableInDataBase(DataBaseConnexion db, DataBaseTable table, List<KeyColumn> keyColumnList) {
+    public static boolean createTableInDataBase(DataBaseConnexion db, DataBaseTable table, List<KeyColumn> keyColumnList) throws SQLException {
         String request = "CREATE TABLE " + table.getTableName() + " (";
         for (ColumnTable columnTable : table.getColumnList().values()) {
             // verify if the column is in the key
@@ -159,7 +180,7 @@ public class DataBaseGenerator {
      * @return the good format of the value to insert in the database
      */
     private static String getGoodFormat(TypeSQL type, String value) {
-        if(type == TypeSQL.TEXT) {
+        if(type == TypeSQL.TEXT || type == TypeSQL.DATE || type == TypeSQL.VARCHAR) {
             return "'" + value + "'";
         }
         return value;
@@ -189,7 +210,7 @@ public class DataBaseGenerator {
     }
 
     //function that verify if the table exist in the database use INFORMATION_SCHEMA.TABLES
-    public static boolean verifyIfTableExist(DataBaseConnexion db, String tableName) {
+    public static boolean verifyIfTableExist(DataBaseConnexion db, String tableName) throws SQLException {
         String request = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + tableName + "';";
         ResultSet resultSet = db.sendRequest(request);
         try {
